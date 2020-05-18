@@ -1,10 +1,10 @@
-package org.venexer.login_service
+package org.venexer.authservice
 
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest
 
 @SpringBootTest
-class LoginServiceApplicationTests {
+class AuthServiceApplicationTests {
 
 	@Test
 	fun contextLoads() {
