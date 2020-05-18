@@ -1,12 +1,11 @@
 
 plugins {
 	id("io.spring.dependency-management") version "1.0.9.RELEASE"
-	id("org.springframework.boot") version "2.1.13.RELEASE"
+	id("org.springframework.boot") version "2.3.0.RELEASE"
 }
 
 subprojects {
 	group = "org.venexer"
-	version = "0.0.1"
 
 	apply(plugin = "io.spring.dependency-management")
 	apply(plugin = "org.springframework.boot")
@@ -18,4 +17,7 @@ subprojects {
 	tasks.withType<Test> {
 		useJUnitPlatform()
 	}
+
+	extra["springVersion"] = "2.3.0.RELEASE"
+	extra["springCloudVersion"] = "Hoxton.SR4"
 }
