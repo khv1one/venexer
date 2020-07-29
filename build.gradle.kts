@@ -1,12 +1,13 @@
-
 plugins {
 	id("io.spring.dependency-management") version "1.0.9.RELEASE"
-	id("org.springframework.boot") version "2.1.13.RELEASE"
+	id("org.springframework.boot").version("2.3.2.RELEASE")
 }
 
 subprojects {
+	extra["springVersion"] = "2.3.2.RELEASE"
+	extra["springCloudVersion"] = "Hoxton.SR6"
+
 	group = "org.venexer"
-	version = "0.0.1"
 
 	apply(plugin = "io.spring.dependency-management")
 	apply(plugin = "org.springframework.boot")
