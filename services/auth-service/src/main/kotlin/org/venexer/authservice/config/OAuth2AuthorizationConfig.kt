@@ -1,10 +1,11 @@
 package org.venexer.authservice.config
 
 import org.springframework.beans.factory.annotation.Qualifier
-import org.springframework.boot.context.properties.ConfigurationProperties
-import org.springframework.boot.jdbc.DataSourceBuilder
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.context.annotation.Primary
+import org.springframework.core.env.Environment
+import org.springframework.jdbc.datasource.DriverManagerDataSource
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer
@@ -25,16 +26,9 @@ class OAuth2AuthorizationConfig(
     private val authenticationManager: AuthenticationManager,
     private val userDetailsService: CustomUserDetailsService,
     private val authClientDetailsService: AuthClientDetailsService,
-    private val encoder: PasswordEncoder
+    private val encoder: PasswordEncoder,
+    private val env: Environment
 ) : AuthorizationServerConfigurerAdapter() {
-
-    override fun configure(security: AuthorizationServerSecurityConfigurer?) {
-        security
-            ?.tokenKeyAccess("permitAll")
-            ?.checkTokenAccess("isAuthenticated()")
-            ?.passwordEncoder(encoder)
-            ?.allowFormAuthenticationForClients()
-    }
 
     override fun configure(clients: ClientDetailsServiceConfigurer?) {
         clients?.withClientDetails(authClientDetailsService)
@@ -47,13 +41,25 @@ class OAuth2AuthorizationConfig(
             ?.userDetailsService(userDetailsService)
     }
 
+    override fun configure(oauthServer: AuthorizationServerSecurityConfigurer?) {
+        oauthServer
+            ?.tokenKeyAccess("permitAll()")
+            ?.checkTokenAccess("isAuthenticated()")
+            ?.passwordEncoder(encoder)
+            ?.allowFormAuthenticationForClients()
+    }
+
     @Bean
     fun tokenStore(): TokenStore {
         return JdbcTokenStore(oauthDataSource())
     }
 
-    @ConfigurationProperties(prefix = "spring.datasource")
+    @Primary
     fun oauthDataSource(): DataSource {
-        return DataSourceBuilder.create().build()
+        val url = env.getProperty("spring.datasource.url").orEmpty()
+        val username = env.getProperty("spring.datasource.username").orEmpty()
+        val password = env.getProperty("spring.datasource.password").orEmpty()
+
+        return DriverManagerDataSource(url, username, password)
     }
 }

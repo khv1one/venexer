@@ -11,6 +11,6 @@ class AuthClientDetailsService (
 ) : ClientDetailsService {
 
     override fun loadClientByClientId(clientId: String): ClientDetails {
-        return authClientRepo.findByClientId(clientId) ?: throw IllegalArgumentException()
+        return authClientRepo.findByClientId(clientId) ?: throw IllegalArgumentException("Client not found")
     }
 }

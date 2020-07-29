@@ -1,4 +1,4 @@
-package org.venexer.authservice.dto
+package org.venexer.accountservice.dto
 
 data class UserDto(
     val id: Long,

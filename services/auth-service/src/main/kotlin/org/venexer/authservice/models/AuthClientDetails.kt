@@ -9,25 +9,25 @@ import javax.persistence.*
 data class AuthClientDetails(
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private val id: Long,
+    private val id: Long = 0,
 
     private val clientId: String,
 
-    private val clientSecret: String,
+    private val clientSecret: String = "",
 
-    private val grantTypes: String?,
+    private val grantTypes: String? = null,
 
-    private val scopes: String?,
+    private val scopes: String? = null,
 
-    private val resources: String?,
+    private val resources: String? = null,
 
-    private val redirectUris: String?,
+    private val redirectUris: String? = null,
 
-    private val accessTokenValidity: Int,
+    private val accessTokenValidity: Int = 0,
 
-    private val refreshTokenValidity: Int,
+    private val refreshTokenValidity: Int = 0,
 
-    private val additionalInformation: String
+    private val additionalInformation: String? = null
 
 ) : ClientDetails {
 

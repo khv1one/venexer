@@ -1,6 +1,5 @@
 package org.venexer.authservice.models
 
-import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
 import org.venexer.authservice.enums.Roles
 import javax.persistence.*
@@ -10,7 +9,7 @@ import javax.persistence.*
 data class User  (
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private val id: Long,
+    private val id: Long = 0,
 
     @Column(length = 200)
     private val username: String,
@@ -20,13 +19,15 @@ data class User  (
 
     private val activated: Boolean = false,
 
-    private val activationKey: String?,
+    private val activationKey: String? = "",
 
-    private val resetPasswordKey: String?,
+    private val resetPasswordKey: String? = "",
 
     private val authorities: HashSet<Roles> = HashSet()
 
 ): UserDetails {
+    fun id(): Long = id
+
     override fun getAuthorities(): HashSet<Roles> = authorities
 
     override fun isEnabled(): Boolean = activated

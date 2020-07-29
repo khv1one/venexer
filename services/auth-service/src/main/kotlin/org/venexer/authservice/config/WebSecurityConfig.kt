@@ -22,7 +22,7 @@ class WebSecurityConfig(
     override fun configure(http: HttpSecurity?) {
         http
             ?.authorizeRequests()
-                ?.antMatchers("/oauth/")?.permitAll()
+                ?.antMatchers("/oauth/**")?.permitAll()
                     ?.anyRequest()?.authenticated()
                 ?.and()
                 ?.csrf()?.disable()
