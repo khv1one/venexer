@@ -1,3 +1,7 @@
+ribbon:
+  ReadTimeout: 20000
+  ConnectTimeout: 20000
+
 zuul:
   ignoredServices: '*'
   host:

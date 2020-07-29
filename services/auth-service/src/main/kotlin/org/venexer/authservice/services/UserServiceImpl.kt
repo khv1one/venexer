@@ -25,6 +25,6 @@ class UserServiceImpl(
     }
 
     private fun throwIfUsernameExist(username: String) {
-        userRepo.findByUsername(username) ?: throw IllegalArgumentException("Incorrect username")
+        userRepo.findByUsername(username) ?.let { throw IllegalArgumentException("Incorrect username") }
     }
 }
