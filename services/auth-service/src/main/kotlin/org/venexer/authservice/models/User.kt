@@ -18,34 +18,26 @@ data class User  (
     @Column(length = 200)
     private val password: String,
 
-    private val activated: Boolean,
+    private val activated: Boolean = false,
 
-    private val activationKey: String,
+    private val activationKey: String?,
 
-    private val resetPasswordKey: String,
+    private val resetPasswordKey: String?,
 
-    private val authorities: MutableCollection<Roles>
+    private val authorities: HashSet<Roles> = HashSet()
 
 ): UserDetails {
-    override fun getAuthorities(): MutableCollection<out GrantedAuthority> {
-        return authorities
-    }
+    override fun getAuthorities(): HashSet<Roles> = authorities
 
-    override fun isEnabled(): Boolean {
-        return activated
-    }
+    override fun isEnabled(): Boolean = activated
 
-    override fun getUsername(): String {
-        return username
-    }
+    override fun getUsername(): String = username
 
     override fun isCredentialsNonExpired(): Boolean {
         return true
     }
 
-    override fun getPassword(): String {
-        return password
-    }
+    override fun getPassword(): String = password
 
     override fun isAccountNonExpired(): Boolean {
         return true

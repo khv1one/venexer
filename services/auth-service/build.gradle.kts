@@ -9,8 +9,6 @@ plugins {
 version = "0.0.1-SNAPSHOT"
 java.sourceCompatibility = JavaVersion.VERSION_11
 
-extra["springCloudVersion"] = "Hoxton.SR4"
-
 dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation("org.springframework.boot:spring-boot-starter-security")
@@ -31,7 +29,7 @@ dependencies {
 dependencyManagement {
 	imports {
 		mavenBom("org.springframework.cloud:spring-cloud-dependencies:${property("springCloudVersion")}")
-		mavenBom("org.springframework.boot:spring-boot-dependencies:2.3.0.RELEASE") {
+		mavenBom("org.springframework.boot:spring-boot-dependencies:${property("springVersion")}") {
 			bomProperty("kotlin.version", "1.3.72")
 		}
 	}
