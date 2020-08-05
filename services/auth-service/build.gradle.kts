@@ -10,15 +10,17 @@ version = "0.0.1-SNAPSHOT"
 java.sourceCompatibility = JavaVersion.VERSION_11
 
 dependencies {
+	compile(project(path = ":services:account-service:account-client"))
+
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation("org.springframework.boot:spring-boot-starter-security")
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
-	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 	implementation("org.springframework.cloud:spring-cloud-starter-config")
 	implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client")
 	implementation("org.springframework.cloud:spring-cloud-starter-oauth2")
+
 	runtimeOnly("mysql:mysql-connector-java")
 	testImplementation("org.springframework.boot:spring-boot-starter-test") {
 		exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
@@ -38,6 +40,6 @@ dependencyManagement {
 tasks.withType<KotlinCompile> {
 	kotlinOptions {
 		freeCompilerArgs = listOf("-Xjsr305=strict")
-		jvmTarget = "1.8"
+		jvmTarget = "11"
 	}
 }

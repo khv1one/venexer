@@ -1,9 +1,9 @@
-package org.venexer.accountservice.services
+package org.venexer.accountserver.services
 
 import org.springframework.stereotype.Service
-import org.venexer.accountservice.client.AuthServiceFeignClient
-import org.venexer.accountservice.dto.UserDto
-import org.venexer.accountservice.dto.UserRegistrationDto
+import org.venexer.accountclient.dto.UserDto
+import org.venexer.accountclient.dto.UserRegistrationDto
+import org.venexer.accountserver.client.AuthServiceFeignClient
 
 @Service
 class AccountServiceImpl(
@@ -11,7 +11,6 @@ class AccountServiceImpl(
 ) : AccountService {
 
     override fun create(user: UserRegistrationDto): UserDto {
-        println("[BUG] user: $user")
         return authServiceFeignClient.createUser(user)
     }
 }

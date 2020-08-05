@@ -1,4 +1,4 @@
-package org.venexer.accountservice
+package org.venexer.accountserver
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth2Sso
