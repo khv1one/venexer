@@ -2,8 +2,8 @@ package org.venexer.authservice.controllers
 
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.*
-import org.venexer.authservice.dto.UserDto
-import org.venexer.authservice.dto.UserRegistrationDto
+import org.venexer.accountclient.dto.UserDto
+import org.venexer.accountclient.dto.UserRegistrationDto
 import org.venexer.authservice.models.User
 import org.venexer.authservice.services.UserService
 import java.security.Principal

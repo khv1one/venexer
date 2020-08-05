@@ -1,9 +1,10 @@
-package org.venexer.accountservice.client
+package org.venexer.accountserver.client
 
 import org.springframework.cloud.openfeign.FeignClient
 import org.springframework.web.bind.annotation.PostMapping
-import org.venexer.accountservice.dto.UserDto
-import org.venexer.accountservice.dto.UserRegistrationDto
+import org.venexer.accountclient.dto.UserDto
+import org.venexer.accountclient.dto.UserRegistrationDto
+
 
 @FeignClient(name = "auth-service")
 interface AuthServiceFeignClient {
