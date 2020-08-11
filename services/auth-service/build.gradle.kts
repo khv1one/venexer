@@ -4,6 +4,7 @@ plugins {
 	kotlin("jvm") version "1.3.72"
 	kotlin("plugin.spring") version "1.3.72"
 	kotlin("plugin.jpa") version "1.3.72"
+	id("org.flywaydb.flyway") version "6.5.3"
 }
 
 version = "0.0.1-SNAPSHOT"
@@ -12,6 +13,7 @@ java.sourceCompatibility = JavaVersion.VERSION_11
 dependencies {
 	compile(project(path = ":services:account-service:account-client"))
 
+	compile("org.flywaydb:flyway-core")
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation("org.springframework.boot:spring-boot-starter-security")
 	implementation("org.springframework.boot:spring-boot-starter-web")
