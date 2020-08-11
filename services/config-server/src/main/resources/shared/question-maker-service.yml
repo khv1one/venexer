@@ -1,7 +1,7 @@
 db_info:
-  schema: ${DB_USERS_SCHEMA:users}
-  user: ${DB_USERS_USERNAME:root}
-  password: ${DB_USERS_PASSWORD:toor}
+  schema: ${DB_TESTS_SCHEMA:tests}
+  user: ${DB_TESTS_USERNAME:root}
+  password: ${DB_TESTS_PASSWORD:toor}
 
 spring:
   datasource:
@@ -12,11 +12,8 @@ spring:
     properties.hibernate.dialect: org.hibernate.dialect.MySQL5InnoDBDialect
     hibernate.ddl-auto: update
     show-sql: true
-  flyway:
-    enabled: false
-    validate-on-migrate: false
 
 server:
   servlet:
     context-path: /uaa
-  port: 8081
+  port: 9000
