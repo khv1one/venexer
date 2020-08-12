@@ -7,29 +7,32 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.web.bind.annotation.*
 import org.venexer.accountclient.dto.UserDto
 import org.venexer.accountclient.dto.UserRegistrationDto
+import org.venexer.authclient.constants.Constants
 import org.venexer.authclient.dto.AuthUserInfo
 import org.venexer.authserver.models.User
-import org.venexer.authserver.repos.UserRepo
 import org.venexer.authserver.services.UserService
 
 @RestController
 @RequestMapping("/user")
 class UserController(
-    private val userService: UserService,
-    private val userRepo: UserRepo
+    private val userService: UserService
 ) {
 
     @GetMapping("/current")
     fun getUser(@AuthenticationPrincipal user: User, authentication: Authentication): Map<String, Any>? {
-        val authUserInfo = AuthUserInfo(user.id, user.username, user.authorities)
-        return hashMapOf("auth_user" to Gson().toJson(authUserInfo), "principal" to authentication)
+        val authUserInfo = AuthUserInfo(user.id(), user.username, user.authorities)
+
+        return hashMapOf(
+            Constants.AUTH_USER_DTO to Gson().toJson(authUserInfo),
+            Constants.PRINCIPAL to authentication
+        )
     }
 
     @PostMapping
     @PreAuthorize("#oauth2.hasScope('server')")
     fun createUser(@RequestBody userRegistration: UserRegistrationDto): UserDto {
-        println("[BUG] userRegistration: $userRegistration")
         val savedUser = userService.create(fromDto(userRegistration))
+
         return toDto(savedUser)
     }
 
@@ -42,7 +45,7 @@ class UserController(
 
     private fun toDto(user: User): UserDto {
         return UserDto(
-            id = user.id,
+            id = user.id(),
             username = user.username
         )
     }

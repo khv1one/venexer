@@ -9,7 +9,7 @@ import javax.persistence.*
 data class User  (
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    val id: Long = 0,
+    private val id: Long = 0,
 
     @Column(length = 200)
     private val username: String,
@@ -26,6 +26,8 @@ data class User  (
     private val authorities: HashSet<Roles> = HashSet()
 
 ): UserDetails {
+
+    fun id(): Long = id
 
     override fun getAuthorities(): HashSet<Roles> = authorities
 
