@@ -1,6 +1,7 @@
 rootProject.name = "venexer"
 
-include("services:auth-service")
+include("services:auth-service:auth-client")
+include("services:auth-service:auth-server")
 
 include("services:config-server")
 

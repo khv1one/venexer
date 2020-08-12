@@ -1,0 +1,49 @@
+package org.venexer.authserver.models
+
+import org.springframework.security.core.userdetails.UserDetails
+import org.venexer.authclient.enums.Roles
+import javax.persistence.*
+
+@Entity
+@Table(name = "users")
+data class User  (
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    val id: Long = 0,
+
+    @Column(length = 200)
+    private val username: String,
+
+    @Column(length = 200)
+    private val password: String,
+
+    private val activated: Boolean = false,
+
+    private val activationKey: String? = "",
+
+    private val resetPasswordKey: String? = "",
+
+    private val authorities: HashSet<Roles> = HashSet()
+
+): UserDetails {
+
+    override fun getAuthorities(): HashSet<Roles> = authorities
+
+    override fun isEnabled(): Boolean = activated
+
+    override fun getUsername(): String = username
+
+    override fun isCredentialsNonExpired(): Boolean {
+        return true
+    }
+
+    override fun getPassword(): String = password
+
+    override fun isAccountNonExpired(): Boolean {
+        return true
+    }
+
+    override fun isAccountNonLocked(): Boolean {
+        return true
+    }
+}

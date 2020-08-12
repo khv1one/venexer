@@ -21,5 +21,11 @@ zuul:
       stripPrefix: false
       sensitiveHeaders:
 
+    question-maker-service:
+      path: /questions/**
+      serviceId: question-maker-service
+      stripPrefix: false
+      sensitiveHeaders:
+
 server:
   port: 8080
