@@ -10,7 +10,7 @@ security:
       clientSecret: 1234
       accessTokenUri: http://localhost:8081/uaa/oauth/token
       grant-type: client_credentials
-      scope: client
+      scope: server
 
 spring:
   datasource:

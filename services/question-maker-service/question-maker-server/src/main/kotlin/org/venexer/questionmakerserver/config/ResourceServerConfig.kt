@@ -1,4 +1,4 @@
-package org.venexer.questionmakerservice.config
+package org.venexer.questionmakerserver.config
 
 import com.google.gson.Gson
 import feign.RequestInterceptor

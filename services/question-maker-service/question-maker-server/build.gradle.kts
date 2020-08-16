@@ -3,6 +3,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
 	kotlin("jvm") version "1.3.72"
 	kotlin("plugin.spring") version "1.3.72"
+	kotlin("plugin.jpa") version "1.3.72"
 }
 
 version = "0.0.1-SNAPSHOT"
@@ -10,6 +11,7 @@ java.sourceCompatibility = JavaVersion.VERSION_11
 
 dependencies {
 	compile(project(path = ":services:auth-service:auth-client"))
+	compile(project(path = ":services:question-maker-service:question-maker-client"))
 
 	implementation("com.google.code.gson:gson:2.8.5")
 	

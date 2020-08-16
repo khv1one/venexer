@@ -1,8 +1,9 @@
-package org.venexer.questionmakerservice.models
+package org.venexer.questionmakerserver.models
 
-import java.time.Instant
-import java.time.format.DateTimeFormatter
+import org.venexer.questionmakerclient.dto.QuestionInfoDto
+import java.util.*
 import javax.persistence.*
+import kotlin.collections.HashSet
 
 @Entity
 @Table(name = "questions")
@@ -16,16 +17,16 @@ data class Question (
     @Column(name = "resource_link")
     val resourceLink: String?, //sound, picture
 
-    val answers: Set<String> = HashSet(),
+    val answers: HashSet<String> = HashSet(),
 
     @Column(name = "true_answer")
     val trueAnswer: String?,
 
-    @Column(name = "sub_group_id")
-    val subGroupId: Long?, //TODO: oneToMany
+    @Column(name = "group_id")
+    val groupId: Long?, //TODO: oneToMany
 
     @Column(name = "created_user_id")
-    val createdUserId: Long?, //TODO: oneToMany
+    val creatorId: Long?, //TODO: oneToMany
 
     @Column(name = "for_organization_id")
     val forOrganizationId: Long?, //TODO: oneToMany
@@ -33,15 +34,26 @@ data class Question (
     @Column(name = "is_private")
     val isPrivate: Boolean = false,
 
+    @Column(name = "is_hidden")
+    val isHidden: Boolean = false,
+
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_time")
-    val createdTime: String = DateTimeFormatter.ISO_INSTANT.format(Instant.now()),
+    val createdTime: Date = Date(),
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "updated_time")
-    val updatedTime: String = DateTimeFormatter.ISO_INSTANT.format(Instant.now()),
+    val updatedTime: Date = Date(),
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "deleted_time")
-    val deletedTime: String?
-)
+    val deletedTime: Date?
+) {
+    fun toQuestionInfoDto() = QuestionInfoDto(
+        id = id,
+        creatorId = creatorId,
+        forOrganizationId = forOrganizationId,
+        isPrivate = isPrivate,
+        isHidden = isHidden
+    )
+}

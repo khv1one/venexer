@@ -31,22 +31,13 @@ class UserController(
     @PostMapping
     @PreAuthorize("#oauth2.hasScope('server')")
     fun createUser(@RequestBody userRegistration: UserRegistrationDto): UserDto {
-        val savedUser = userService.create(fromDto(userRegistration))
+        val savedUser = userService.create(userRegistration.toUser())
 
-        return toDto(savedUser)
+        return savedUser.toQuestionDto()
     }
 
-    private fun fromDto(userRegistration: UserRegistrationDto): User {
-        return User(
-            username = userRegistration.username,
-            password = userRegistration.password
-        )
-    }
-
-    private fun toDto(user: User): UserDto {
-        return UserDto(
-            id = user.id(),
-            username = user.username
-        )
-    }
+    private fun UserRegistrationDto.toUser() = User (
+        username = username,
+        password = password
+    )
 }

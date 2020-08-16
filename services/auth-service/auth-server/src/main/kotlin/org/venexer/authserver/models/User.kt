@@ -1,12 +1,13 @@
 package org.venexer.authserver.models
 
 import org.springframework.security.core.userdetails.UserDetails
+import org.venexer.accountclient.dto.UserDto
 import org.venexer.authclient.enums.Roles
 import javax.persistence.*
 
 @Entity
 @Table(name = "users")
-data class User  (
+data class User (
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private val id: Long = 0,
@@ -48,4 +49,9 @@ data class User  (
     override fun isAccountNonLocked(): Boolean {
         return true
     }
+
+    fun toQuestionDto() = UserDto(
+        id = id(),
+        username = username
+    )
 }
