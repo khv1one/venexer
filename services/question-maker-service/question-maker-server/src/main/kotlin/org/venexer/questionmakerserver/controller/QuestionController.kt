@@ -11,8 +11,8 @@ import org.venexer.questionmakerserver.services.QuestionsService
 @RestController
 class QuestionController(val questionsService: QuestionsService) {
 
-    @GetMapping("/all")
-    fun createNewAccount(@AuthenticationPrincipal auth: AuthUserInfo): List<QuestionInfoDto> {
+    @GetMapping("/my")
+    fun getAllAuthUserTests(@AuthenticationPrincipal auth: AuthUserInfo): List<QuestionInfoDto> {
         return questionsService
             .loadQuestionsByCreatorId(auth.id)
             .map { it.toQuestionInfoDto() }
@@ -23,9 +23,19 @@ class QuestionController(val questionsService: QuestionsService) {
         @AuthenticationPrincipal auth: AuthUserInfo,
         @RequestBody questionDto: QuestionDto
     ): QuestionInfoDto {
-        val savedQuestion = questionsService.create(questionDto.toQuestion(auth))
+        return questionsService
+            .create(questionDto.toQuestion(auth))
+            .toQuestionInfoDto()
+    }
 
-        return savedQuestion.toQuestionInfoDto()
+    @RequestMapping("/user/{id}")
+    fun getNotHiddenQuestionsOfUser(
+        @PathVariable(value="id") userId: Long,
+        @AuthenticationPrincipal auth: AuthUserInfo
+    ): List<QuestionInfoDto> {
+        return questionsService
+            .loadQuestionsByCreatorId(userId)
+            .map { it.toQuestionInfoDto() }
     }
 
     private fun QuestionDto.toQuestion(auth: AuthUserInfo) = Question(

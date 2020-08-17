@@ -51,6 +51,7 @@ data class Question (
 ) {
     fun toQuestionInfoDto() = QuestionInfoDto(
         id = id,
+        text = text,
         creatorId = creatorId,
         forOrganizationId = forOrganizationId,
         isPrivate = isPrivate,
