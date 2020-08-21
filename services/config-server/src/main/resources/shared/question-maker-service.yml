@@ -26,3 +26,9 @@ server:
   servlet:
     context-path: /questions
   port: 9000
+
+upload:
+  img:
+    path: "${user.dir}/uploads/img"
+  sound:
+    path: "${user.dir}/uploads/sound"
