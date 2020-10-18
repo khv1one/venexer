@@ -12,5 +12,7 @@ include("services:gateway-service")
 include("services:account-service:account-server")
 include("services:account-service:account-client")
 
-include("services:question-maker-service:question-maker-server")
-include("services:question-maker-service:question-maker-client")
+include("services:question-service:question-server")
+include("services:question-service:question-client")
+
+include("utils")
