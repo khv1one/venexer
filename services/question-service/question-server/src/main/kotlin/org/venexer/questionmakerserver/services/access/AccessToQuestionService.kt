@@ -7,15 +7,30 @@ import org.venexer.utils.service.ServiceBase
 
 @Service
 class AccessToQuestionService<T: AccessToQuestion, R : AccessToQuestionRepo<T>>(
-        private val accessUserRepo: R
-) : ServiceBase<T, Long, R>(accessUserRepo) {
+        private val accessRepo: R
+) : ServiceBase<T, Long, R>(accessRepo) {
 
-    fun findById(questionId: Long): HashSet<T> {
-        return accessUserRepo.findByQuestionId(questionId)
+    fun findByQuestionId(questionId: Long): HashSet<T> {
+        return accessRepo.findByQuestionId(questionId)
     }
 
-    fun findByIds(questionIds: Set<Long>): HashSet<T> {
-        return accessUserRepo.findInQuestionId(questionIds)
+    fun findByQuestionIds(questionIds: Set<Long>): HashSet<T> {
+        return accessRepo.findInQuestionId(questionIds)
     }
 
+    fun findByCreatorId(creatorId: Long): HashSet<T> {
+        return accessRepo.findByCreatorId(creatorId)
+    }
+
+    fun findByTargetId(targetId: Long): HashSet<T> {
+        return accessRepo.findByTargetId(targetId)
+    }
+
+    fun findByCreatorIdAndTargetIdAndQuestionId(
+            creatorId: Long,
+            targetId: Long,
+            questionId: Long
+    ): T? {
+        return accessRepo.findByCreatorIdAndTargetIdAndQuestionId(creatorId, targetId, questionId)
+    }
 }

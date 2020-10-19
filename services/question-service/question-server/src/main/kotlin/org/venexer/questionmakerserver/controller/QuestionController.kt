@@ -7,8 +7,8 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
 import org.venexer.authclient.dto.AuthUserInfo
-import org.venexer.questionmakerclient.dto.QuestionDto
-import org.venexer.questionmakerclient.dto.QuestionInfoDto
+import org.venexer.questionmakerclient.dto.questions.QuestionFromClientDto
+import org.venexer.questionmakerclient.dto.questions.QuestionShortInfoDto
 import org.venexer.questionmakerserver.models.Question
 import org.venexer.questionmakerserver.services.QuestionsService
 import java.io.File
@@ -23,40 +23,40 @@ class QuestionController(private val questionsService: QuestionsService) {
     private lateinit var uploadSoundPath: String
 
     @GetMapping("/my")
-    fun getAllAuthUserQuestions(@AuthenticationPrincipal auth: AuthUserInfo): List<QuestionInfoDto> {
+    fun getAllAuthUserQuestions(@AuthenticationPrincipal auth: AuthUserInfo): List<QuestionShortInfoDto> {
         return questionsService
             .loadQuestionsByCreatorId(auth.id)
-            .map { it.toQuestionInfoDto() }
+            .map { it.toQuestionShortInfoDto() }
     }
 
     @PostMapping("/add")
     fun createQuestion(
             @AuthenticationPrincipal auth: AuthUserInfo,
-            @RequestBody questionDto: QuestionDto
-    ): QuestionInfoDto {
+            @RequestBody questionFromClientDto: QuestionFromClientDto
+    ): QuestionShortInfoDto {
         return questionsService
-            .create(questionDto.toQuestion(auth))
-            .toQuestionInfoDto()
+            .create(questionFromClientDto.toQuestion(auth))
+            .toQuestionShortInfoDto()
     }
 
     @RequestMapping("/user/{id}")
     fun getNotHiddenQuestionsOfUser(
             @PathVariable(value="id") userId: Long,
             @AuthenticationPrincipal auth: AuthUserInfo
-    ): List<QuestionInfoDto> {
+    ): List<QuestionShortInfoDto> {
         return questionsService
             .loadQuestionsByCreatorId(userId)
-            .map { it.toQuestionInfoDto() }
+            .map { it.toQuestionShortInfoDto() }
     }
 
     @RequestMapping("/edit/{id}", method = [RequestMethod.POST])
     fun editQuestion(
             @PathVariable(value="id") questionId: Long,
             @AuthenticationPrincipal auth: AuthUserInfo,
-            @RequestBody questionDto: QuestionDto
+            @RequestBody questionFromClientDto: QuestionFromClientDto
     ): ResponseEntity<String> {
         val oldQuestion = questionsService.loadQuestionByIdAndCreatorId(questionId, auth.id)
-        val newQuestion = questionDto.toQuestion(auth)
+        val newQuestion = questionFromClientDto.toQuestion(auth)
 
         return if (oldQuestion != null) {
             questionsService.update(newQuestion, oldQuestion)
@@ -101,14 +101,12 @@ class QuestionController(private val questionsService: QuestionsService) {
         }
     }
 
-    private fun QuestionDto.toQuestion(auth: AuthUserInfo) = Question(
+    private fun QuestionFromClientDto.toQuestion(auth: AuthUserInfo) = Question(
         text = text,
         resourceLink = resourceLink,
         answers = answers,
         trueAnswer = trueAnswer,
-        groupId = groupId,
         creatorId = auth.id,
-        organizationId = organizationId,
         isPrivate = isPrivate,
         isHidden = isHidden,
         deletedTime = null

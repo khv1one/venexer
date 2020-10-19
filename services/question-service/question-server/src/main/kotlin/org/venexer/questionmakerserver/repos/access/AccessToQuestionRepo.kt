@@ -15,4 +15,10 @@ interface AccessToQuestionRepo<T : AccessToQuestion> : CrudRepository<T, Long> {
 
     fun findInQuestionId(questionIds: Set<Long>, deletedTime: Date? = null): HashSet<T>
 
+    fun findByCreatorIdAndTargetIdAndQuestionId(
+            creatorId: Long,
+            targetId: Long,
+            questionId: Long,
+            deletedTime: Date? = null
+    ): T?
 }

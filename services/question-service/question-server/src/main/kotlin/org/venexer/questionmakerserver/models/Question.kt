@@ -1,6 +1,7 @@
 package org.venexer.questionmakerserver.models
 
-import org.venexer.questionmakerclient.dto.QuestionInfoDto
+import org.venexer.questionmakerclient.dto.questions.QuestionFullInfoDto
+import org.venexer.questionmakerclient.dto.questions.QuestionShortInfoDto
 import org.venexer.utils.entity.EntityBase
 import java.util.*
 import javax.persistence.*
@@ -35,14 +36,8 @@ data class Question (
         @Column(name = "true_answer")
         val trueAnswer: String?,
 
-        @Column(name = "group_id")
-        val groupId: Long?, //TODO: oneToMany
-
         @Column(name = "created_user_id")
         val creatorId: Long?, //TODO: oneToMany
-
-        @Column(name = "organization_id")
-        val organizationId: Long?, //TODO: oneToMany
 
         @Column(name = "is_private")
         val isPrivate: Boolean = false,
@@ -50,12 +45,23 @@ data class Question (
         @Column(name = "is_hidden")
         val isHidden: Boolean = false
 ) : EntityBase {
-    fun toQuestionInfoDto() = QuestionInfoDto(
-        id = id,
-        text = text,
-        creatorId = creatorId,
-        organizationId = organizationId,
-        isPrivate = isPrivate,
-        isHidden = isHidden
-    )
+       fun toQuestionShortInfoDto() = QuestionShortInfoDto(
+           id = id,
+           text = text,
+           creatorId = creatorId,
+           isPrivate = isPrivate,
+           isHidden = isHidden
+       )
+
+        fun toQuestionFullInfoDto() = QuestionFullInfoDto(
+                id = id,
+                text = text,
+                creatorId = creatorId,
+                resourceLink = resourceLink,
+                answers = answers,
+                isPrivate = isPrivate,
+                isHidden = isHidden,
+                created = createdTime,
+                updated = updatedTime
+        )
 }

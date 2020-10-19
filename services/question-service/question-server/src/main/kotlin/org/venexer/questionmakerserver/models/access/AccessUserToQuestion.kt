@@ -6,7 +6,9 @@ import javax.persistence.*
 @Entity
 @Table(name = "access_user_to_question")
 data class AccessUserToQuestion(
-        override var id: Long,
+        @Id
+        @GeneratedValue(strategy = GenerationType.AUTO)
+        override var id: Long = 0,
 
         @Column(name = "question_id")
         override val questionId: Long,
