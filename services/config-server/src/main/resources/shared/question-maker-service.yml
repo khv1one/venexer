@@ -1,0 +1,34 @@
+db_info:
+  schema: ${DB_TESTS_SCHEMA:tests}
+  user: ${DB_TESTS_USERNAME:root}
+  password: ${DB_TESTS_PASSWORD:toor}
+
+security:
+  oauth2:
+    client:
+      clientId: question-maker-service
+      clientSecret: 1234
+      accessTokenUri: http://localhost:8081/uaa/oauth/token
+      grant-type: client_credentials
+      scope: server
+
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:33006/${db_info.schema}?autoReconnect=true&useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&useSSL=false&allowPublicKeyRetrieval=true
+    username: ${db_info.user}
+    password: ${db_info.password}
+  jpa:
+    properties.hibernate.dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+    hibernate.ddl-auto: update
+    show-sql: true
+
+server:
+  servlet:
+    context-path: /questions
+  port: 9000
+
+upload:
+  img:
+    path: "${user.dir}/uploads/img"
+  sound:
+    path: "${user.dir}/uploads/sound"

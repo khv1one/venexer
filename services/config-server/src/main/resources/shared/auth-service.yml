@@ -10,11 +10,11 @@ spring:
     password: ${db_info.password}
   jpa:
     properties.hibernate.dialect: org.hibernate.dialect.MySQL5InnoDBDialect
-    hibernate.ddl-auto: validate
+    hibernate.ddl-auto: update
     show-sql: true
   flyway:
-    enabled: true
-    validate-on-migrate: true
+    enabled: false
+    validate-on-migrate: false
 
 server:
   servlet:

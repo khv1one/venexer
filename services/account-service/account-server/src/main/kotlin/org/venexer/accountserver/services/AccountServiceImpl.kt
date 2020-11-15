@@ -3,7 +3,7 @@ package org.venexer.accountserver.services
 import org.springframework.stereotype.Service
 import org.venexer.accountclient.dto.UserDto
 import org.venexer.accountclient.dto.UserRegistrationDto
-import org.venexer.accountserver.client.AuthServiceFeignClient
+import org.venexer.accountserver.rpc.AuthServiceFeignClient
 
 @Service
 class AccountServiceImpl(
