@@ -14,6 +14,7 @@ abstract class ServiceBase<T : EntityBase, K, R: CrudRepository<T, K>>(private v
     fun delete(entity: T): T {
         entity.deletedTime = Date()
         entity.updatedTime = Date()
+
         return repo.save(entity)
     }
 

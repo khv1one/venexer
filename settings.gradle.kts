@@ -15,4 +15,7 @@ include("services:account-service:account-client")
 include("services:question-service:question-server")
 include("services:question-service:question-client")
 
+include("services:client-service:client-server")
+include("services:client-service:client-client")
+
 include("utils")
